@@ -131,6 +131,7 @@ tapply(x,f,mean)
 
 library(datasets)
 head(airquality)
+data(airquality)
 
 #split data set
 s <- split(airquality, airquality$Month)
@@ -141,11 +142,66 @@ sapply(s, function(x) colMeans(x[, c("Ozone", "Solar.R", "Wind")]))
 
 sapply(s, function(x) colMeans(x[, c("Ozone", "Solar.R", "Wind")], na.rm=TRUE))
 
+#splitting on more than one level
+
+x <- rnorm(10)
+f1 <- gl(2,5)
+f2 <- gl(5,2)
+
+f1
+f2
+
+interaction(f1, f2)
+
+str(split(x, list(f1, f2)))
+
+str(split(x, list(f1, f2), drop = TRUE))
+#get rid of empty combinations or empty levels, because you don't observe all combinations.
 
 
+###QUIZ
+###Question 1###
+library(datasets)
+data(iris)
+
+head(iris)
+
+s <- split(iris,iris$Species)
+
+sapply(s, function(x) mean(x[, c("Sepal.Length")], na.rm=TRUE))
 
 
+sapply(s, function(x) colMeans(x[, c("Sepal.Length")]))
 
+
+tapply(iris, iris$species, mean)
+
+###Question 2###
+
+apply(iris[,1:4],2,mean)
+apply(iris,2,mean)
+apply(iris[,1:4],1,mean)
+
+rowMeans(iris[,1:4])
+colMeans(iris)
+apply(iris,1,mean)
+
+###Question 3###
+
+data(mtcars)
+
+sapply(split(mtcars$mpg, mtcars$cyl), mean)
+mean(mtcars$mpg, mtcars$cyl)
+with(mtcars,tapply(mpg,cyl,mean))
+tapply(mtcars$mpg, mtcars$cyl, mean)
+apply(mtcars,2,mean)
+sapply(mtcars,cyl,mean)
+split(mtcars,mtcars$cyl)
+lapply(mtcars,mean)
+tapply(mtcars$cyl,mtcars$mpg, mean)
+
+###Question 4###
+sapply(split(mtcars$hp, mtcars$cyl), mean)
 
 
 
